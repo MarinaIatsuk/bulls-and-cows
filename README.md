@@ -83,4 +83,4 @@ npm run build      # проверка типов и production-сборка Vite
 
 ## Демо
 
-**Ссылка на игру:** _добавить URL GitHub Pages после настройки и успешного деплоя._
+**Ссылка на игру:** https://marinaiatsuk.github.io/bulls-and-cows/
