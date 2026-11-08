@@ -122,9 +122,30 @@ export function isValidGuess(
     new Set(digits).size === digits.length
   );
 }
+const possibleSecretsCache = new Map<string, number>();
 
 export function countPossibleSecrets(length: number, base: number): number {
-  void length;
-  void base;
-  throw new Error('Not implemented');
+  createDigitValidator(base);
+
+  if (!Number.isInteger(length) || length < 0) {
+    throw new RangeError('Length must be a non-negative integer');
+  }
+  if (length > base) return 0;
+
+  const count = (remainingLength: number, availableDigits: number): number => {
+    if (remainingLength === 0) return 1;
+    if (remainingLength > availableDigits) return 0;
+
+    const cacheKey = `${remainingLength}:${availableDigits}`;
+    const cachedCount = possibleSecretsCache.get(cacheKey);
+    if (cachedCount !== undefined) return cachedCount;
+
+    const result =
+      availableDigits * count(remainingLength - 1, availableDigits - 1);
+
+    possibleSecretsCache.set(cacheKey, result);
+    return result;
+  };
+
+  return count(length, base);
 }
