@@ -95,4 +95,21 @@ describe('isValidGuess', () => {
   });
 });
 
+describe('countPossibleSecrets', () => {
+  it('counts permutations without a leading-zero restriction', () => {
+    expect(countPossibleSecrets(4, 10)).toBe(5040);
+    expect(countPossibleSecrets(2, 2)).toBe(2);
+  });
 
+  it('returns zero when there are not enough distinct digits', () => {
+    expect(countPossibleSecrets(3, 2)).toBe(0);
+  });
+
+  it('uses one arrangement for a zero-length suffix', () => {
+    expect(countPossibleSecrets(0, 10)).toBe(1);
+  });
+
+  it('rejects a negative length', () => {
+    expect(() => countPossibleSecrets(-1, 10)).toThrow(RangeError);
+  });
+});
