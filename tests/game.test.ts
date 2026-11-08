@@ -33,3 +33,18 @@ describe('createDigitValidator', () => {
   });
 });
 
+describe('generateSecret', () => {
+  it('uses the injected random source and permits a leading zero', () => {
+    expect(generateSecret(4, 10, () => 0)).toBe('0123');
+  });
+
+  it('generates unique lowercase hexadecimal digits', () => {
+    expect(generateSecret(2, 16, () => 0.99)).toBe('fe');
+  });
+
+  it('rejects impossible lengths and invalid random values', () => {
+    expect(() => generateSecret(3, 2, () => 0)).toThrow(RangeError);
+    expect(() => generateSecret(2, 10, () => 1)).toThrow(RangeError);
+  });
+});
+
