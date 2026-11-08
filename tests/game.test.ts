@@ -74,3 +74,25 @@ describe('evaluateGuess', () => {
   });
 });
 
+describe('isValidGuess', () => {
+  it('accepts a correctly sized guess with unique digits', () => {
+    expect(isValidGuess('0123', 4, 10)).toBe(true);
+  });
+
+  it('rejects repeated, invalid, or incorrectly sized digits', () => {
+    expect(isValidGuess('0122', 4, 10)).toBe(false);
+    expect(isValidGuess('01a3', 4, 10)).toBe(false);
+    expect(isValidGuess('012', 4, 10)).toBe(false);
+  });
+
+  it('accepts uppercase hex and treats duplicate letter case as the same digit', () => {
+    expect(isValidGuess('A1F0', 4, 16)).toBe(true);
+    expect(isValidGuess('A1fF', 4, 16)).toBe(false);
+  });
+
+  it('rejects a length larger than the number of available digits', () => {
+    expect(isValidGuess('010', 3, 2)).toBe(false);
+  });
+});
+
+
