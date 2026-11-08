@@ -23,10 +23,49 @@ export function generateSecret(
   base: number,
   random: () => number = Math.random,
 ): string {
-  void length;
-  void base;
-  void random;
-  throw new Error('Not implemented');
+  createDigitValidator(base);
+
+  if (!Number.isInteger(length) || length < 1 || length > base) {
+    throw new RangeError('Length must be an integer from 1 to the base');
+  }
+
+  const selection = Array.from({ length }).reduce<{
+    availableDigits: string[];
+    secretDigits: string[];
+  }>(
+    (state) => {
+      const randomValue = random();
+
+      if (
+        !Number.isFinite(randomValue) ||
+        randomValue < 0 ||
+        randomValue >= 1
+      ) {
+        throw new RangeError('Random source must return a number in [0, 1)');
+      }
+
+      const randomIndex = Math.floor(
+        randomValue * state.availableDigits.length,
+      );
+      const selectedDigit = state.availableDigits[randomIndex];
+
+      return {
+        availableDigits: state.availableDigits.filter(
+          (_, index) => index !== randomIndex,
+        ),
+        secretDigits: [...state.secretDigits, selectedDigit],
+      };
+    },
+    {
+      availableDigits: Array.from(
+        { length: base },
+        (_, value) => value.toString(16),
+      ),
+      secretDigits: [],
+    },
+  );
+
+  return selection.secretDigits.join('');
 }
 
 export function evaluateGuess(secret: string, guess: string): GuessResult {
