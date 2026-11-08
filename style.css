@@ -1,0 +1,212 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color: #172033;
+  background: #f2f5fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 32px 16px;
+}
+
+.app {
+  width: min(100%, 760px);
+  margin: 0 auto;
+}
+
+.app-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  color: #15234a;
+  font-size: clamp(2rem, 7vw, 3rem);
+}
+
+.app-header p {
+  margin: 0;
+  color: #667085;
+}
+
+.panel {
+  padding: clamp(20px, 5vw, 36px);
+  border: 1px solid #dbe3f0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgb(33 55 100 / 10%);
+}
+
+.panel h2,
+.panel h3 {
+  margin-top: 0;
+  color: #1c2b53;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  color: #344054;
+  font-weight: 650;
+}
+
+input,
+select,
+button {
+  min-height: 44px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 9px 12px;
+  color: #182230;
+  background: #fff;
+}
+
+button {
+  padding: 10px 16px;
+  border: 0;
+  color: #fff;
+  background: #3157c8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2545a9;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #a9bcff;
+  outline-offset: 2px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.secondary-button {
+  color: #263654;
+  background: #e8edf7;
+}
+
+.secondary-button:hover {
+  background: #dce4f2;
+}
+
+.status-line {
+  min-height: 1.5em;
+  color: #b42318;
+  font-weight: 600;
+}
+
+.muted {
+  color: #667085;
+}
+
+.game-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f3f6fc;
+}
+
+.game-summary p {
+  margin: 0;
+}
+
+.guess-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin: 20px 0 28px;
+}
+
+.guess-form label {
+  grid-column: 1 / -1;
+  font-weight: 700;
+}
+
+.history-list,
+.records-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 24px;
+}
+
+.history-list li,
+.records-list li {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f7f8fc;
+}
+
+.section-block {
+  margin-top: 26px;
+}
+
+.win-message {
+  margin: 18px 0;
+  padding: 14px;
+  border: 1px solid #a6e4c1;
+  border-radius: 12px;
+  color: #067647;
+  background: #ecfdf3;
+  font-weight: 700;
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guess-form {
+    grid-template-columns: 1fr;
+  }
+
+  .guess-form label {
+    grid-column: auto;
+  }
+}

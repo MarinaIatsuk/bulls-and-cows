@@ -6,8 +6,16 @@ export interface GuessResult {
 export type DigitValidator = (character: string) => boolean;
 
 export function createDigitValidator(base: number): DigitValidator {
-  void base;
-  throw new Error('Not implemented');
+  if (!Number.isInteger(base) || base < 2 || base > 16) {
+    throw new RangeError('Base must be an integer from 2 to 16');
+  }
+
+  const digits = new Set(
+    Array.from({ length: base }, (_, value) => value.toString(16)),
+  );
+
+  return (character: string): boolean =>
+    character.length === 1 && digits.has(character.toLowerCase());
 }
 
 export function generateSecret(
