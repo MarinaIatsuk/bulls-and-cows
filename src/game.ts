@@ -69,9 +69,40 @@ export function generateSecret(
 }
 
 export function evaluateGuess(secret: string, guess: string): GuessResult {
-  void secret;
-  void guess;
-  throw new Error('Not implemented');
+  const secretDigits = Array.from(secret.toLowerCase());
+  const guessDigits = Array.from(guess.toLowerCase());
+
+  if (secretDigits.length !== guessDigits.length) {
+    throw new RangeError('Secret and guess must have the same length');
+  }
+
+  const bulls = secretDigits.filter(
+    (digit, index) => digit === guessDigits[index],
+  ).length;
+
+  const unmatchedSecretDigits = secretDigits.filter(
+    (digit, index) => digit !== guessDigits[index],
+  );
+  const unmatchedGuessDigits = guessDigits.filter(
+    (digit, index) => digit !== secretDigits[index],
+  );
+
+  const { cows } = unmatchedGuessDigits.reduce(
+    (result, guessDigit) => {
+      const matchIndex = result.remainingSecretDigits.indexOf(guessDigit);
+      if (matchIndex === -1) return result;
+
+      return {
+        remainingSecretDigits: result.remainingSecretDigits.filter(
+          (_, index) => index !== matchIndex,
+        ),
+        cows: result.cows + 1,
+      };
+    },
+    { remainingSecretDigits: unmatchedSecretDigits, cows: 0 },
+  );
+
+  return { bulls, cows };
 }
 
 export function isValidGuess(guess: string, length: number, base: number): boolean {
