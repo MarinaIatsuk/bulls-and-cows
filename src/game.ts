@@ -105,11 +105,22 @@ export function evaluateGuess(secret: string, guess: string): GuessResult {
   return { bulls, cows };
 }
 
-export function isValidGuess(guess: string, length: number, base: number): boolean {
-  void guess;
-  void length;
-  void base;
-  throw new Error('Not implemented');
+export function isValidGuess(
+  guess: string,
+  length: number,
+  base: number,
+): boolean {
+  const isAllowedDigit = createDigitValidator(base);
+
+  if (!Number.isInteger(length) || length < 1 || length > base) return false;
+
+  const digits = Array.from(guess.toLowerCase());
+
+  return (
+    digits.length === length &&
+    digits.every(isAllowedDigit) &&
+    new Set(digits).size === digits.length
+  );
 }
 
 export function countPossibleSecrets(length: number, base: number): number {
