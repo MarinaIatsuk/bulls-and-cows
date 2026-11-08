@@ -48,3 +48,29 @@ describe('generateSecret', () => {
   });
 });
 
+describe('evaluateGuess', () => {
+  it('counts bulls and cows for a mixed result', () => {
+    expect(evaluateGuess('4271', '4872')).toEqual({ bulls: 2, cows: 1 });
+  });
+
+  it('counts a fully correct guess as bulls only', () => {
+    expect(evaluateGuess('4271', '4271')).toEqual({ bulls: 4, cows: 0 });
+  });
+
+  it('counts digits in the wrong positions as cows', () => {
+    expect(evaluateGuess('4271', '1742')).toEqual({ bulls: 0, cows: 4 });
+  });
+
+  it('compares hexadecimal letters without regard to case', () => {
+    expect(evaluateGuess('A1B2', 'b2a1')).toEqual({ bulls: 0, cows: 4 });
+  });
+
+  it('does not count a repeated guess digit more than once', () => {
+    expect(evaluateGuess('1234', '1123')).toEqual({ bulls: 1, cows: 2 });
+  });
+
+  it('rejects guesses with a different length', () => {
+    expect(() => evaluateGuess('1234', '123')).toThrow(RangeError);
+  });
+});
+
